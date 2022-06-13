@@ -4,8 +4,9 @@
     <link rel="stylesheet" type="text/css" href="/static/style.css">
   </head>
   <body>
-    <div>Mushroom Identifier</div>
-    <button type="button" onclick="predict()">Predict</button>
+    <div class="content">
+      <h1>Mushroom Identifier</h1>
+    </div>
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
     <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
@@ -24,7 +25,13 @@
         </button>
       </div>
     </div>
+      <div>
+        <button class="file-upload-btn" type="button" onclick="predict()">Predict</button>
+      </div>
   </div>
+  <div class="white-box" id="mushroom-info">
+  </div>
+
   <div id="webcam-container"></div>
   <div id="label-container"></div>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
@@ -87,10 +94,8 @@
               maxPrediction = prediction[i].probability.toFixed(2);
               classPrediction = prediction[i].className;
             }
-              // const classPrediction =
-              //    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-              // labelContainer.childNodes[i].innerHTML = classPrediction;
           }
+
           sendName(classPrediction);
       }
       function sendName(name) {
@@ -101,9 +106,32 @@
           },
           type:'GET',
           dataType:'json',
-          headers: { "Content-Type" : "application/json;charset=UTF-8" }
+          headers: { "Content-Type" : "application/json;charset=UTF-8" },
+          success: function (result) {
+            var script = "";
+            script += "<div class=\"content\">"
+
+            if ("P" == result.type || "p" == result.type) {
+              script += "  <h1>"
+              script += result.korName + "(독 버섯)"
+              script += "  </h1>"
+            } else {
+              script += "  <h1>"
+              script += result.korName + "(식용 버섯)"
+              script += "  </h1>"
+            }
+            script += "</div>"
+            script += "<div class=\"content\">"
+            script += "  <img src=" + result.img + " />"
+            script += "</div>"
+            script += "<div class=\"content\">"
+            script += "  설명 : " + result.info
+            script += "</div>"
+
+            $("#mushroom-info").html(script)
+          }
         });
       }
-    </script>
+  </script>
   </body>
 </html>

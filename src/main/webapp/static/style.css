@@ -9,6 +9,14 @@ body {
 	margin: 0 auto;
 	padding: 20px;
   }
+
+.white-box {
+	margin-top: 10px;
+	background-color: #ffffff;
+	width: 600px;
+	margin: 0 auto;
+	padding: 20px;
+}
   
   .file-upload-btn {
 	width: 100%;
@@ -41,6 +49,10 @@ body {
 	display: none;
 	text-align: center;
   }
+
+.content {
+	text-align: center;
+}
   
   .file-upload-input {
 	position: absolute;
@@ -55,6 +67,7 @@ body {
   
   .image-upload-wrap {
 	margin-top: 20px;
+	margin-bottom: 20px;
 	border: 4px dashed #1FB264;
 	position: relative;
   }
