@@ -5,7 +5,6 @@
   </head>
   <body>
     <div>Mushroom Identifier</div>
-    <button type="button" onclick="init()">Start</button>
     <button type="button" onclick="predict()">Predict</button>
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
@@ -64,8 +63,8 @@
       // the link to your model provided by Teachable Machine export panel
       const URL = "https://teachablemachine.withgoogle.com/models/bo3O9syNS/";
       let model, webcam, labelContainer, maxPredictions;
-      // Load the image model and setup the webcam
-      async function init() {
+      // run the webcam image through the image model
+      async function predict() {
           const modelURL = URL + "model.json";
           const metadataURL = URL + "metadata.json";
           // load the model and metadata
@@ -76,19 +75,34 @@
           maxPredictions = model.getTotalClasses();
           labelContainer = document.getElementById("label-container");
           for (let i = 0; i < maxPredictions; i++) { // and class labels
-              labelContainer.appendChild(document.createElement("div"));
+            labelContainer.appendChild(document.createElement("div"));
           }
-      }
-      // run the webcam image through the image model
-      async function predict() {
           // predict can take in an image, video or canvas html element
           var image = document.getElementById("face-image")
           const prediction = await model.predict(image, false);
+          var maxPrediction = 0;
+          let classPrediction = null;
           for (let i = 0; i < maxPredictions; i++) {
-              const classPrediction =
-                  prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-              labelContainer.childNodes[i].innerHTML = classPrediction;
+            if (maxPrediction < prediction[i].probability.toFixed(2)) {
+              maxPrediction = prediction[i].probability.toFixed(2);
+              classPrediction = prediction[i].className;
+            }
+              // const classPrediction =
+              //    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+              // labelContainer.childNodes[i].innerHTML = classPrediction;
           }
+          sendName(classPrediction);
+      }
+      function sendName(name) {
+        $.ajax({
+          url:'/mushroom',
+          data : {
+            'name' : name
+          },
+          type:'GET',
+          dataType:'json',
+          headers: { "Content-Type" : "application/json;charset=UTF-8" }
+        });
       }
     </script>
   </body>

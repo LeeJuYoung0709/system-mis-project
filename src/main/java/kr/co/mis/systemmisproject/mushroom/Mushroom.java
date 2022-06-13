@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class Mushroom {
-
+    private String Name;
 }
