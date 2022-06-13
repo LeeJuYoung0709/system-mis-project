@@ -3,6 +3,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.co.mis.mushroom.MushroomMapper">
-
+<mapper namespace="kr.co.mis.systemmisproject.mushroom.MushroomMapper">
+  <select id="selectOne" parameterType="Mushroom" resultType="Mushroom">
+      SELECT NO
+           , ENG_NAME
+           , KOR_NAME
+           , TYPE
+           , INFO
+           , IMG
+      FROM mushroom
+      WHERE ENG_NAME = #{engName}
+  </select>
 </mapper>

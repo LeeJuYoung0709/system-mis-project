@@ -97,7 +97,7 @@
         $.ajax({
           url:'/mushroom',
           data : {
-            'name' : name
+            'engName' : name
           },
           type:'GET',
           dataType:'json',

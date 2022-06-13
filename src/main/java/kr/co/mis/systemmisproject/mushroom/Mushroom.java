@@ -4,5 +4,9 @@ import lombok.Data;
 
 @Data
 public class Mushroom {
-    private String Name;
+    private String engName;
+    private String korName;
+    private String img;
+    private String type;
+    private String info;
 }
